@@ -1,0 +1,314 @@
+/* ========== GENERAL ========== */
+body {
+  margin: 0;
+  font-family: 'VT323', monospace;
+  background: black;
+  overflow: hidden;
+  cursor: url('cursor.png'), auto;
+}
+
+#scene-desktop {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  transition: transform 2s ease;
+  transform-origin: center 26%; /* AJUSTADO PARA ALINEACIÓN */
+}
+
+#desk {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ========== BOTÓN POWER Y LED ========== */
+#power-button {
+  position: absolute;
+  width: 40px;
+  height: 30px;
+  background: url('power-btn.png') no-repeat center/contain;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  top: 490px;
+  right: 585px;
+  transition: transform 0.1s ease, filter 0.3s ease;
+}
+
+#power-button:hover {
+  filter: brightness(1.4);
+}
+
+#power-button:active {
+  transform: scale(0.9);
+}
+
+#led-light {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  top: 491px;
+  right: 636px;
+  z-index: 10;
+  box-shadow: 0 0 0 transparent;
+}
+
+/* LED rojo titilante */
+.led-red-blink {
+  background: #ff0000;
+  animation: blink-red 0.6s infinite alternate;
+}
+
+@keyframes blink-red {
+  0% { background: #ff0000; box-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000; }
+  100% { background: #ff4444; box-shadow: 0 0 10px #ff4444, 0 0 20px #ff4444; }
+}
+
+/* LED verde */
+.led-green {
+  background: limegreen;
+  box-shadow: 0 0 20px 5px rgba(0,255,100,0.8);
+  animation: led-on-pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes led-on-pulse {
+  from { box-shadow: 0 0 15px 3px rgba(0,255,100,0.6); }
+  to { box-shadow: 0 0 30px 8px rgba(0,255,100,1); }
+}
+
+/* ========== MONITOR ========== */
+#monitor-screen {
+  top: 125px;
+  left: 572px;
+  width: 447px;
+  height: 330px;
+  background: #000;
+  position: absolute;
+  overflow: hidden;
+  z-index: 2;
+  box-shadow: 0 0 0 rgba(0,255,100,0);
+  border-radius: 6px;
+  transform: scale(1);
+  transform-origin: center center;
+  transition: transform 1.8s ease-out, box-shadow 0.8s ease-in-out;
+}
+
+.monitor-on {
+  box-shadow: 0 0 60px 15px rgba(0,255,100,0.45),
+              0 0 120px 40px rgba(0,255,100,0.2);
+}
+
+/* ========== FLASH ENCENDIDO ========== */
+#monitor-flash {
+  position: absolute;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.flash-on {
+  animation: crt-flash 0.8s ease-out;
+}
+
+@keyframes crt-flash {
+  0% { opacity: 1; transform: scaleY(0.02); filter: blur(2px); }
+  10% { opacity: 1; transform: scaleY(1.2); }
+  30% { opacity: 0.8; transform: scaleY(1); }
+  60% { opacity: 0.4; }
+  100% { opacity: 0; }
+}
+
+/* ========== WALLPAPER DEL MONITOR ========== */
+#monitor-wallpaper {
+  position: absolute;
+  inset: 0;
+  background: url('wallpaper-monitor.jpg') center/cover no-repeat #1080c0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  z-index: 1;
+}
+
+#monitor-wallpaper.visible {
+  opacity: 1;
+}
+
+/* ========== CONTENIDO MONITOR ========== */
+#monitor-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  transform: scale(1);
+  transform-origin: center center;
+  transition: transform 1.8s ease-out;
+}
+
+/* CRT OVERLAY */
+#crt-overlay {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    rgba(255,255,255,0.05) 0px,
+    rgba(0,0,0,0.1) 2px,
+    rgba(255,255,255,0.05) 4px
+  );
+  pointer-events: none;
+  opacity: 0;
+  z-index: 2;
+}
+
+.crt-on #crt-overlay {
+  opacity: 0.25;
+  animation: crt-flicker 0.15s infinite alternate;
+}
+
+@keyframes crt-flicker {
+  from { opacity: 0.18; }
+  to { opacity: 0.3; }
+}
+
+/* SCANLINE ENCENDIDO */
+.crt-on::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0) 100%);
+  opacity: 0;
+  animation: crt-scanline 0.6s ease-out;
+  pointer-events: none;
+  z-index: 3;
+}
+
+@keyframes crt-scanline {
+  0% { opacity: 1; transform: translateY(-100%); }
+  40% { opacity: 0.9; transform: translateY(0%); }
+  100% { opacity: 0; transform: translateY(100%); }
+}
+
+/* ========== EFECTO APAGADO BREVE ========== */
+#crt-shutdown {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(0,0,0,0.8) 70%);
+  opacity: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.flash-off {
+  animation: crt-flash-off 0.8s ease-out;
+}
+
+@keyframes crt-flash-off {
+  0% { opacity: 1; transform: scaleY(1.2); filter: blur(1px); }
+  30% { opacity: 0.8; transform: scaleY(1); }
+  60% { opacity: 0.4; }
+  100% { opacity: 0; }
+}
+
+/* ========== ICONOS ========== */
+#desktop-icons {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 4;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+#desktop-icons.visible {
+  opacity: 1;
+}
+
+.icon {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+  text-shadow: 1px 1px 2px black;
+  user-select: none;
+}
+
+.icon img {
+  width: 64px;
+  height: 64px;
+}
+
+/* ========== VENTANAS ========== */
+.window {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  width: 300px;
+  background: #c0c0c0;
+  border: 2px solid #000;
+  display: flex;
+  flex-direction: column;
+  z-index: 5;
+  font-size: 14px;
+}
+
+.window-header {
+  background: #000080;
+  color: white;
+  padding: 4px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: grab;
+  font-weight: bold;
+}
+
+.window-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.window-close:hover {
+  color: red;
+  background: rgba(255,0,0,0.2);
+  border-radius: 2px;
+}
+
+.window-content {
+  background: #efefef;
+  padding: 10px;
+  flex: 1;
+  min-height: 150px;
+}
+
+.icon-doc {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.icon-doc:hover {
+  background: rgba(0,0,128,0.1);
+  border-radius: 3px;
+}
+
+.icon-doc img {
+  width: 32px;
+  height: 32px;
+}
+
+.hidden {
+  display: none !important;
+}
