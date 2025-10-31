@@ -8,72 +8,84 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- ESCENA DESKTOP -->
+
+  <!-- ESCENA PRINCIPAL -->
   <div id="scene-desktop">
     <img id="desk" src="Wallpaper.png" alt="Escritorio retro">
 
-    <!-- Botón power -->
+    <!-- BOTÓN POWER -->
     <button id="power-button"></button>
     <div id="led-light" class="led-red-blink"></div>
-  </div>
 
-  <!-- MONITOR -->
-  <div id="monitor-screen">
-    <div id="monitor-content">
-      <!-- WALLPAPER DEL MONITOR -->
-      <div id="monitor-wallpaper" class="hidden"></div>
-      
-      <!-- CRT OVERLAY -->
-      <div id="crt-overlay"></div>
+    <!-- MONITOR -->
+    <div id="monitor-screen">
+      <div id="monitor-content">
 
-      <!-- EFECTO APAGADO -->
-      <div id="crt-shutdown" class="hidden"></div>
+        <!-- WALLPAPER -->
+        <div id="monitor-wallpaper" class="hidden"></div>
 
-      <!-- ICONOS -->
-      <div id="desktop-icons">
-        <div class="icon" id="icon-folder">
-          <img src="folder.png" alt="Carpeta Documentos">
-          <span>Documentos</span>
-        </div>
-        <div class="icon" id="icon-game">
-          <img src="api.png" alt="Api">
-          <span>Api.exe</span>
-        </div>
-        <div class="icon" id="icon-info">
-          <img src="info.png" alt="Info.txt">
-          <span>Info.txt</span>
-        </div>
-      </div>
+        <!-- CRT OVERLAY -->
+        <div id="crt-overlay"></div>
 
-      <!-- VENTANA DOCUMENTOS -->
-      <div id="window-documents" class="window hidden">
-        <div class="window-header">
-          <span class="window-title">Documentos</span>
-          <button class="window-close">✖</button>
-        </div>
-        <div class="window-content">
-          <div class="icon-doc">
-            <img src="doc.png" alt="Documento">
-            <span>notas.doc</span>
+        <!-- EFECTO APAGADO -->
+        <div id="crt-shutdown" class="hidden"></div>
+
+        <!-- ICONOS DEL ESCRITORIO -->
+        <div id="desktop-icons">
+          <div class="icon" id="icon-folder">
+            <img src="folder.png" alt="Carpeta Documentos">
+            <span>Documentos</span>
           </div>
-          <div class="icon-doc">
-            <img src="doc.png" alt="Documento">
-            <span>apuntes.doc</span>
+          <div class="icon" id="icon-game">
+            <img src="api.png" alt="Api">
+            <span>Api.exe</span>
+          </div>
+          <div class="icon" id="icon-info">
+            <img src="info.png" alt="Info.txt">
+            <span>Info.txt</span>
           </div>
         </div>
+
+        <!-- BARRA DE TAREAS -->
+        <div id="taskbar">
+          <div class="start-button">
+            <img src="start-95.png" alt="Start">
+            </div>
+          <div class="taskbar-clock">12:00</div>
+        </div>
+
+
+        <!-- VENTANA DOCUMENTOS -->
+        <div id="window-documents" class="window hidden">
+          <div class="window-header">
+            <span class="window-title">Documentos</span>
+            <button class="window-close">X</button>
+          </div>
+          <div class="window-content">
+            <div class="icon-doc">
+              <img src="doc.png" alt="Documento">
+              <span>notas.doc</span>
+            </div>
+            <div class="icon-doc">
+              <img src="doc.png" alt="Documento">
+              <span>apuntes.doc</span>
+            </div>
+          </div>
+        </div>
+
       </div>
+
+      <!-- FLASH -->
+      <div id="monitor-flash"></div>
     </div>
-
-    <!-- FLASH DE ENCENDIDO -->
-    <div id="monitor-flash"></div>
   </div>
 
   <!-- SONIDOS -->
-  <audio id="sound-power" src="power-on.mp3"></audio>
-  <audio id="sound-poweroff" src="power-off.mp3"></audio>
-  <audio id="sound-ambient" src="ambient-radio.mp3" loop></audio>
-  <audio id="sound-click" src="click.wav"></audio>
-  <audio id="sound-window" src="window-open.wav"></audio>
+  <audio id="sound-power" src="power-on.mp3" preload="auto"></audio>
+  <audio id="sound-poweroff" src="power-off.mp3" preload="auto"></audio>
+  <audio id="sound-ambient" src="ambient-radio.mp3" loop preload="auto"></audio>
+  <audio id="sound-click" src="click.wav" preload="auto"></audio>
+  <audio id="sound-window" src="window-open.wav" preload="auto"></audio>
 
   <script src="script.js"></script>
 </body>
